@@ -23,5 +23,6 @@
   "homepage": "https://github.com/mcoliveros1202/PWA-text-editor#readme",
   "dependencies": {
     "concurrently": "^7.3.0"
-  }
+  },
+  "keywords": []
 }
