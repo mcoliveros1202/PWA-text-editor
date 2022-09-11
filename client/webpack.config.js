@@ -22,21 +22,24 @@ module.exports = () => {
       new WebpackPwaManifest({
         name: 'Just Another Text Editor',
         short_name: 'JATE',
+        inject: true,
         description: 'A text editor',
+        background_color: '#FFFFFF',
+        theme_color: '#32a9e1',
         start_url: './',
         publicPath: './',
         icons: [
           {
-            src: path.resolve('src/images/favicon.ico'),
+            src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
-          {
-            src: path.resolve('src/images/logo.png'),
-            sizes: '1024x1024',
-            destination: path.join('assets', 'icons'),
-            purpose: 'maskable'
-          }
+          // {
+          //   src: path.resolve('src/images/logo.png'),
+          //   sizes: '1024x1024',
+          //   destination: path.join('assets', 'icons'),
+          //   purpose: 'maskable'
+          // }
         ],
       }),
       new InjectManifest({
@@ -47,10 +50,10 @@ module.exports = () => {
 
     module: {
       rules: [
-        {
-          test: /\.(png|svg|jpg|jpeg|gif)$/i,
-          type: 'asset/resource',
-        },
+        // {
+        //   test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        //   type: 'asset/resource',
+        // },
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
@@ -61,13 +64,13 @@ module.exports = () => {
           use: {
             loader: 'babel-loader',
             options: {
-              presets: [
-                ['@babel/preset-env', { targets: "defaults" }]
-              ]
-            }
-          }
+              presets: ['@babel/preset-env'],
+              plugins: [
+                "@babel/transform-runtime",
+              ],
+            },
+          },
         },
-        {}
       ],
     },
   };
