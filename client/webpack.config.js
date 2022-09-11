@@ -19,9 +19,14 @@ module.exports = () => {
         template: './index.html',
         title: 'Webpack Plugins'
       }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js'
+      }),
       new WebpackPwaManifest({
         name: 'Just Another Text Editor',
         short_name: 'JATE',
+        fingerprints: false,
         inject: true,
         description: 'A text editor',
         background_color: '#FFFFFF',
@@ -34,26 +39,12 @@ module.exports = () => {
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
-          // {
-          //   src: path.resolve('src/images/logo.png'),
-          //   sizes: '1024x1024',
-          //   destination: path.join('assets', 'icons'),
-          //   purpose: 'maskable'
-          // }
         ],
       }),
-      new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'service-worker.js'
-      })
     ],
 
     module: {
       rules: [
-        // {
-        //   test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        //   type: 'asset/resource',
-        // },
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
@@ -66,6 +57,7 @@ module.exports = () => {
             options: {
               presets: ['@babel/preset-env'],
               plugins: [
+                "@babel/plugin-proposal-object-rest-spread",
                 "@babel/transform-runtime",
               ],
             },
